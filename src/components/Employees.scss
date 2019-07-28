@@ -1,0 +1,323 @@
+.root :global {
+	font-size: 28px;
+
+	width: 1560px;
+	margin: 0 auto 20px;
+	padding: 0 20px;
+
+	.addEmployee {
+		display: flex;
+
+		margin-bottom: 20px;
+		.button {
+			display: flex;
+
+			padding: 0 20px;
+
+			color: #36965b;
+			border: 1px solid #36965b;
+			box-shadow: 2px 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+
+			align-items: center;
+			&:hover {
+				color: #fff;
+				background-color: #30804f;
+			}
+			svg {
+				margin: 20px 0;
+			}
+			p {
+				margin: 0 0 0 10px;
+			}
+			.wrap {
+				display: flex;
+			}
+		}
+	}
+
+	.list {
+		.filters {
+			display: flex;
+
+			margin: 20px 0;
+
+			align-items: center;
+			justify-content: space-between;
+
+			.wrap {
+				display: flex;
+
+				margin: 0 15px;
+
+				align-items: center;
+				.roleFilter {
+					min-width: 480px;
+					margin: 0 10px;
+				}
+				.archiveFilter {
+					min-width: 250px;
+					margin: 0 10px;
+				}
+			}
+			p {
+				margin-left: 20px;
+			}
+		}
+		.header {
+			background-color: #e0e0e0;
+		}
+		.row {
+			display: flex;
+
+			width: 100%;
+			.sort {
+				display: flex;
+
+				width: min-content;
+				margin-right: 15px;
+
+				flex-wrap: wrap;
+			}
+			.table {
+				height: 70px;
+				padding-left: 20px;
+
+				border: solid 1px #c5c5c5;
+			}
+			.name {
+				display: flex;
+
+				width: 30%;
+
+				align-items: center;
+				justify-content: space-between;
+			}
+			.role {
+				display: flex;
+
+				width: 18%;
+
+				align-items: center;
+			}
+			.phone {
+				display: flex;
+
+				width: 27%;
+
+				align-items: center;
+			}
+			.age {
+				display: flex;
+
+				width: 25%;
+
+				align-items: center;
+				justify-content: space-between;
+			}
+		}
+		a {
+			display: flex;
+
+			width: 100%;
+			&:hover {
+				color: #000;
+				background-color: #efefef;
+			}
+		}
+	}
+
+	@media screen and (max-width: 1620px) {
+		font-size: 26px;
+
+		width: 1140px;
+	}
+
+	@media screen and (max-width: 1220px) {
+		font-size: 24px;
+
+		width: 960px;
+		.list {
+			.row {
+				.sort {
+					margin: 0 5px;
+				}
+				.table {
+					height: auto;
+					padding: 10px 0 10px 15px;
+				}
+				.phone {
+					padding: 0;
+
+					text-align: center;
+
+					justify-content: center;
+				}
+				.age {
+					padding: 0;
+
+					text-align: center;
+
+					justify-content: center;
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 1012px) {
+		font-size: 20px;
+
+		width: 720px;
+		.list {
+			.filters {
+				.wrap {
+					display: block;
+
+					margin: 10px 0;
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 788px) {
+		font-size: 16px;
+
+		width: 540px;
+		h1 {
+			font-size: 32px;
+		}
+
+		.addEmployee {
+			display: flex;
+
+			width: 100%;
+			margin-bottom: 15px;
+			.button {
+				display: flex;
+
+				width: 100%;
+
+				justify-content: center;
+				svg {
+					margin: 10px 0;
+				}
+			}
+		}
+		.row.table.header {
+			display: none;
+		}
+
+		.list {
+			display: flex;
+
+			flex-wrap: wrap;
+			justify-content: space-around;
+
+			.card {
+				margin: 7px 0;
+
+				box-shadow: 2px 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+			}
+			.row {
+				display: block;
+
+				width: 160px;
+				.table {
+					height: auto;
+					padding: 5px 0 5px 15px;
+
+					border: none;
+				}
+				.name {
+					display: block;
+
+					width: auto;
+				}
+				.role {
+					display: block;
+
+					width: auto;
+				}
+				.phone {
+					display: block;
+
+					width: auto;
+				}
+				.age {
+					display: block;
+
+					width: auto;
+				}
+				a {
+					display: flex;
+
+					width: 100%;
+					height: 100%;
+
+					flex-wrap: wrap;
+					&:hover {
+						color: #000;
+						background-color: #efefef;
+					}
+				}
+			}
+			.sFilters {
+				width: 100%;
+
+				border: none;
+			}
+		}
+	}
+	@media screen and (max-width: 596px) {
+		width: 100%;
+		min-width: 360px;
+		padding: 0;
+		h1 {
+			font-size: 26px;
+
+			padding-left: 15px;
+		}
+		.addEmployee {
+			display: flex;
+
+			width: 100%;
+			margin-bottom: 15px;
+			.button {
+				display: flex;
+
+				width: 100%;
+
+				justify-content: center;
+				svg {
+					margin: 10px 0;
+				}
+			}
+		}
+		.list {
+			.sFilters {
+				display: flex;
+
+				margin: 15px 0;
+
+				align-items: center;
+				justify-content: space-between;
+
+				.wrap {
+					display: flex;
+
+					flex-wrap: wrap;
+					align-items: center;
+					justify-content: center;
+					.roleFilter {
+						min-width: 360px;
+						margin: 3px 0;
+					}
+					.archiveFilter {
+						min-width: 250px;
+						margin: 3px 0;
+					}
+				}
+				p {
+					display: none;
+				}
+			}
+		}
+	}
+}

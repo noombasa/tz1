@@ -1,0 +1,39 @@
+body {
+	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div {
+	font-family: "Roboto Slab", serif;
+}
+
+h1 {
+	font-size: 52px;
+}
+
+h2 {
+	font-size: 48px;
+}
+
+a {
+	text-decoration: none;
+	&:link {
+		color: black;
+	}
+	&:visited {
+		color: black;
+	}
+	&:active {
+		color: black;
+	}
+	&:hover {
+		color: black;
+	}
+}
+
