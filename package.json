@@ -6,8 +6,10 @@
   "author": "Mushnikov Kirill",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development",
-    "build": "webpack -p"
+    "w-start": "webpack-dev-server --open --mode development",
+    "build": "webpack -p",
+    "start": "node server.js",
+    "heroku-postbuild": "webpack -p"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -31,13 +33,12 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
     "react-redux": "^7.1.0",
-    "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-router-redux": "^4.0.8",
     "react-select": "^3.0.4",
     "react-text-mask": "^5.4.3",
     "redux": "^4.0.4",

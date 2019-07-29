@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { editEmployee } from "../actions/employees";
 import EmployeeEdit from "../components/EmployeeEdit.jsx";
+import { editEmployee } from "../actions/employees";
 
 const EmployeesContainer = props => {
 	const { employees, editEmployee } = props;

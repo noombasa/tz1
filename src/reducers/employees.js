@@ -4,25 +4,19 @@ import {
 } from "../constants/actionEmployees";
 
 const initialState = {
-	employees: {},
-	error: false,
-	msg: ""
+	employees: {}
 };
 
 export const employees = (state = initialState, action) => {
-	// console.log("Reducer data:", action.data);
 	switch (action.type) {
 		case DOWNLOAD_EMPLOYEES_SUCCESS: {
 			return {
-				employees: action.employees,
-				error: false,
-				msg: ""
+				employees: action.employees
 			};
 		}
 		case DOWNLOAD_EMPLOYEES_FAIL: {
 			return {
-				employees: {},
-				errorMsg: action.errorMsg
+				employees: {}
 			};
 		}
 		default: {

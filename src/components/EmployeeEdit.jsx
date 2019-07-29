@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+
 import Select from "react-select";
 import MaskedInput from "react-text-mask";
 import Modal from "./Modal.jsx";
-import { Redirect } from "react-router-dom";
 
 import { optionsSelect } from "../constants/other";
 import { returnDefaultValue, verification } from "../helpers/other";
@@ -31,8 +32,6 @@ const EmployeeEdit = props => {
 		subtitle: "",
 		content: null
 	});
-
-	console.log(isRedirect);
 
 	const save = () => {
 		const clearName = name.replace(/(^\s+|\s+$)/g, "").replace(/\s+/g, " ");
@@ -109,7 +108,6 @@ const EmployeeEdit = props => {
 	};
 
 	const useHandler = () => {
-		console.log(1);
 		handler({
 			id: (employee && employee.id) || Date.now(),
 			name: name.replace(/(^\s+|\s+$)/g, "").replace(/\s+/g, " "),
@@ -118,10 +116,41 @@ const EmployeeEdit = props => {
 			phone,
 			isArchive
 		});
-		console.log(2);
 		setIsRedirect(true);
-		console.log(3);
 	};
+
+	const maskBirthday = [
+		/[0-3]/,
+		/[0-9]/,
+		".",
+		/[0-1]/,
+		/[0-9]/,
+		".",
+		/[0-9]/,
+		/[0-9]/,
+		/[0-9]/,
+		/[0-9]/
+	];
+
+	const maskPhone = [
+		"+",
+		/[1-9]/,
+		" ",
+		"(",
+		/[1-9]/,
+		/\d/,
+		/\d/,
+		")",
+		" ",
+		/\d/,
+		/\d/,
+		/\d/,
+		"-",
+		/\d/,
+		/\d/,
+		/\d/,
+		/\d/
+	];
 
 	return (
 		<>
@@ -166,18 +195,7 @@ const EmployeeEdit = props => {
 								value={birthday}
 								placeholder="Дата рождения"
 								onChange={e => setBirthday(e.target.value)}
-								mask={[
-									/[0-3]/,
-									/[0-9]/,
-									".",
-									/[0-1]/,
-									/[0-9]/,
-									".",
-									/[0-9]/,
-									/[0-9]/,
-									/[0-9]/,
-									/[0-9]/
-								]}
+								mask={maskBirthday}
 							/>
 						</div>
 					</div>
@@ -191,25 +209,7 @@ const EmployeeEdit = props => {
 								value={phone}
 								placeholder="+_ (___) ___-____"
 								onChange={e => setPhone(e.target.value)}
-								mask={[
-									"+",
-									/[1-9]/,
-									" ",
-									"(",
-									/[1-9]/,
-									/\d/,
-									/\d/,
-									")",
-									" ",
-									/\d/,
-									/\d/,
-									/\d/,
-									"-",
-									/\d/,
-									/\d/,
-									/\d/,
-									/\d/
-								]}
+								mask={maskPhone}
 							/>
 						</div>
 					</div>

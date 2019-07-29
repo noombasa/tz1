@@ -14,12 +14,10 @@ export const downloadEmployeesServer = () => {
 export const createEmployeeServer = ({ data }) => {
 	let employees = getState();
 	employees[data.id] = data;
-	console.log("сервкер Nempl", employees);
 	setState(employees);
 };
 export const editEmployeeServer = ({ data }) => {
 	let employees = getState();
 	employees[data.id] = data;
-	console.log("сервкер Nempl", employees);
 	setState(employees);
 };

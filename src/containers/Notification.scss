@@ -1,0 +1,20 @@
+.root :global {
+	display: block;
+
+	height: 0;
+	.wrap {
+		font-size: 18px;
+
+		position: fixed;
+		top: 30px;
+		right: 30px;
+
+		width: 320px;
+		padding: 10px;
+
+		border-left: 5px solid hsl(211, 100, 50);
+		border-radius: 5px;
+		background-color: hsl(211, 100, 61);
+		box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+	}
+}

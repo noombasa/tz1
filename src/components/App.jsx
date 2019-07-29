@@ -1,15 +1,13 @@
 import React from "react";
 
 import Header from "./Header.jsx";
-import Body from "./Body.jsx";
+import Body from "../containers/Body.jsx";
 
-const App = () => {
-	return (
-		<React.Fragment>
-			<Header />
-			<Body />
-		</React.Fragment>
-	);
-};
+const App = props => (
+	<>
+		<Header />
+		<Body />
+	</>
+);
 
 export default App;
