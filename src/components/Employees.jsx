@@ -18,8 +18,8 @@ const Employees = props => {
 	const [filterArchive, setFilterArchive] = useState();
 
 	const sortFunc = (a, b) => {
-		const aName = a.name.split(" ")[1];
-		const bName = b.name.split(" ")[1];
+		const aName = a.name.split(" ")[0];
+		const bName = b.name.split(" ")[0];
 		const aBirthday = parseDate(a.birthday);
 		const bBirthday = parseDate(b.birthday);
 
