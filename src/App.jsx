@@ -83,7 +83,7 @@ const App = () => {
     <div className="App">
       <button onClick={()=> onClick()}>sdsdsd</button>
       <video ref={videoEl} id="preview" style={{display: "none"}}/>
-      <canvas id="canvas" ref={canvasEl} width="200"/>
+      <canvas id="canvas" ref={canvasEl} style={{width: "500px", height: "350px"}}/>
       <span>{codeResult?`${codeResult} time: ${timerEnd - timerStart}`:"not fonund"}</span>
       <button onClick={()=> setVideoDevice(1)}>camera1</button>
       <button onClick={()=> setVideoDevice(0)}>camera0</button>
