@@ -23,7 +23,10 @@ const App = () => {
   alert("v0.1");
 //   const worker = new WebWorker(Worker);
   const [codeResult, setCodeResult] = useState(null);
-  const [videoDevice, setVideoDevice] = useState(0);
+  const [videoDevice, setVideoDevice] = useState(1);
+  const [isNeedScanning, setIsNeedScanning] = useState(false);
+  const [timerEnd, setTimerEnd] = useState(0);
+  const [timerStart, setTimerStart] = useState(0);
   const videoEl = useRef(null);
   const canvasEl = useRef(null);
 
@@ -53,8 +56,10 @@ const App = () => {
 
       })
         .then(stream => {
-          start(video, stream);
-          window.requestAnimationFrame(tick);
+          if (isNeedScanning) {
+            start(video, stream);
+            window.requestAnimationFrame(tick);
+          }
         })
         .catch(e => console.error(e));
     } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -80,8 +85,10 @@ const App = () => {
 
       })
         .then(stream => {
-          start(video, stream);
-          window.requestAnimationFrame(tick);
+          if (isNeedScanning) {
+            start(video, stream);
+            window.requestAnimationFrame(tick);
+          }
         })
         .catch(e => console.error(e));
     } else {
@@ -106,7 +113,9 @@ const App = () => {
         const image = ctx.getImageData(0, 0, width, height);
         const code = jsQR(image.data, image.width, image.height);
         if (code) {
+          setIsNeedScanning(false);
           setCodeResult(code.data);
+          setTimerEnd(performance.now());
         }
         window.requestAnimationFrame(tick);
       }
@@ -114,6 +123,8 @@ const App = () => {
   }
   
   const onClick = () => {
+    setIsNeedScanning(true);
+    setTimerStart(performance.now());
     // worker.postMessage("sdsads");
     // const canvas = canvasEl.current;
     // let ctx= canvas.getContext("2d");
@@ -127,7 +138,7 @@ const App = () => {
     // if (code) {
     //   console.log("Found QR code", code);
     // } else {
-      console.log("not found")
+      console.log("not found");
     // }
   }
 
@@ -135,8 +146,8 @@ const App = () => {
     <div className="App">
       <button onClick={()=> onClick()}>sdsdsd</button>
       <video ref={videoEl} id="preview"/>
-      <canvas id="canvas" ref={canvasEl} width="640" height="480"/>
-      <span>{codeResult?codeResult:"not fonund"}</span>
+      <canvas id="canvas" ref={canvasEl}/>
+      <span>{codeResult?`${codeResult} time: ${timerEnd - timerStart}`:"not fonund"}</span>
       <button onClick={()=> setVideoDevice(1)}>camera1</button>
       <button onClick={()=> setVideoDevice(0)}>camera0</button>
 
