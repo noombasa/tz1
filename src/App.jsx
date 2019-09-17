@@ -75,7 +75,7 @@ const App = () => {
         const image = ctx.getImageData(0, 0, width, height);
         const code = jsQR(image.data, image.width, image.height);
         if (code) {
-          console.log("Found QR code", code);
+          alert("Found QR code", code);
         }
         window.requestAnimationFrame(tick);
       }
