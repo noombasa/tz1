@@ -30,7 +30,26 @@ const App = () => {
 
   useEffect(() => {
     const video = videoEl.current;
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        console.log(devices);
+        var videoDevices = [];
+        var videoDeviceIndex = 0;
+        devices.forEach(function(device) {
+          console.log(
+            device.kind + ": " + device.label + " id = " + device.deviceId
+          );
+          if (device.kind == "videoinput") {
+            videoDevices[videoDeviceIndex++] = device.deviceId;
+          }
+        });
+        console.log(videoDevices);
+
+        return navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false
+        });
+      })
       .then(stream => {
         start(video, stream);
         window.requestAnimationFrame(tick);
