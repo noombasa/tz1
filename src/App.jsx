@@ -31,6 +31,7 @@ const App = () => {
     const video = videoEl.current;
 
     if (navigator && navigator.getUserMedia) {
+      alert('тута нема выбора записи кинопленки');
       navigator.getUserMedia(
         { video: true, audio: false },
         function(stream) {
@@ -44,6 +45,7 @@ const App = () => {
         }
       );
     } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      alert('тута есть выбора записи кинопленки');
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           var videoDevices = [0,0];
