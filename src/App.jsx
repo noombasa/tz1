@@ -20,6 +20,7 @@ const start = (videoEl, stream) => {
 }
 
 const App = () => {
+  alert("v0");
 //   const worker = new WebWorker(Worker);
   const [codeResult, setCodeResult] = useState(null);
   const [videoDevice, setVideoDevice] = useState(0);
@@ -58,7 +59,7 @@ const App = () => {
 
           var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
           height: { min: 776, ideal: 720, max: 1080 },
-          deviceId: { exact: videoDevices[videoDevice]  } 
+          deviceId: { exact: videoDevices[0]  } 
         };
         return navigator.mediaDevices.getUserMedia({ video: constraints });
 
