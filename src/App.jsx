@@ -21,6 +21,7 @@ const start = (videoEl, stream) => {
 
 const App = () => {
 //   const worker = new WebWorker(Worker);
+  const [codeResult, setCodeResult] = useState(null);
   const videoEl = useRef(null);
   const canvasEl = useRef(null);
 
@@ -75,7 +76,7 @@ const App = () => {
         const image = ctx.getImageData(0, 0, width, height);
         const code = jsQR(image.data, image.width, image.height);
         if (code) {
-          alert("Found QR code", code);
+          setCodeResult(code.data);
         }
         window.requestAnimationFrame(tick);
       }
@@ -105,6 +106,7 @@ const App = () => {
       <button onClick={()=> onClick()}>sdsdsd</button>
       <video ref={videoEl} id="preview"/>
       <canvas id="canvas" ref={canvasEl} width="640" height="480"/>
+      <span>{codeResult?"not found":codeResult}</span>
     </div>
   );
 };
