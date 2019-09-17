@@ -21,6 +21,7 @@ const start = (videoEl, stream) => {
 
 const App = () => {
   const [codeResult, setCodeResult] = useState('Not found');
+  const [videoDevice, setVideoDevice] = useState(1);
   const [isNeedScanning, setIsNeedScanning] = useState(false);
   const [timerEnd, setTimerEnd] = useState(0);
   const [timerStart, setTimerStart] = useState(0);
@@ -29,14 +30,13 @@ const App = () => {
 
   useEffect(() => {
     const video = videoEl.current;
-
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
       .then(stream => {
         start(video, stream);
         window.requestAnimationFrame(tick);
       })
       .catch(e => console.error(e));
-    });
+  });
 
   const tick = () => {
     const video = videoEl.current;
@@ -54,11 +54,12 @@ const App = () => {
         canvas.height = height;
         let ctx = canvas.getContext("2d");
         
-        ctx.drawImage(video, 0, 0);
+        ctx.drawImage(video, 0, 0, width, height);
         const image = ctx.getImageData(0, 0, width, height);
         let code;
+        console.log("isNeedScanning: ", isNeedScanning, "code: ", code);
         if (isNeedScanning) {
-          console.log("jsqr");
+          console.log("jsqr", isNeedScanning);
           code = jsQR(image.data, image.width, image.height);
           if (code) {
             console.log("set result");
@@ -69,7 +70,7 @@ const App = () => {
         }
         window.requestAnimationFrame(tick);
       }
-    }, 67);
+    }, 1);
   }
   
   const onClick = () => {
