@@ -22,6 +22,7 @@ const start = (videoEl, stream) => {
 const App = () => {
 //   const worker = new WebWorker(Worker);
   const [codeResult, setCodeResult] = useState(null);
+  const [videoDevice, setVideoDevice] = useState(0);
   const videoEl = useRef(null);
   const canvasEl = useRef(null);
 
@@ -42,18 +43,31 @@ const App = () => {
         }
       );
     } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(
-        { video: true, audio: false },
-        function(stream) {
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          var videoDevices = [0,0];
+          var videoDeviceIndex = 0;
+          devices.forEach(function(device) {
+            console.log(device.kind + ": " + device.label +
+              " id = " + device.deviceId);
+            if (device.kind == "videoinput") {  
+              videoDevices[videoDeviceIndex++] =  device.deviceId;    
+            }
+          });
+
+
+          var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 776, ideal: 720, max: 1080 },
+          deviceId: { exact: videoDevices[videoDevice]  } 
+        };
+        return navigator.mediaDevices.getUserMedia({ video: constraints });
+
+      })
+        .then(stream => {
           start(video, stream);
           window.requestAnimationFrame(tick);
-        },
-        function() {
-          console.log(
-            "хьюстон, у нас проблемы"
-          );
-        }
-      );
+        })
+        .catch(e => console.error(e));
     } else {
       alert("У вас ни чего не робит")
     }
@@ -107,6 +121,9 @@ const App = () => {
       <video ref={videoEl} id="preview"/>
       <canvas id="canvas" ref={canvasEl} width="640" height="480"/>
       <span>{codeResult?codeResult:"not fonund"}</span>
+      <button onClick={()=> setVideoDevice(1)}>camera1</button>
+      <button onClick={()=> setVideoDevice(0)}>camera0</button>
+
     </div>
   );
 };
