@@ -20,102 +20,52 @@ const start = (videoEl, stream) => {
 }
 
 const App = () => {
-  alert("v0.2");
-//   const worker = new WebWorker(Worker);
-  const [codeResult, setCodeResult] = useState(null);
-  const [videoDevice, setVideoDevice] = useState(1);
+  const [codeResult, setCodeResult] = useState('Not found');
   const [isNeedScanning, setIsNeedScanning] = useState(false);
   const [timerEnd, setTimerEnd] = useState(0);
   const [timerStart, setTimerStart] = useState(0);
-  const [size, setSize] = useState ('');
   const videoEl = useRef(null);
   const canvasEl = useRef(null);
 
   useEffect(() => {
     const video = videoEl.current;
 
-    if (navigator && navigator.getUserMedia) {
-      navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-          var videoDevices = [0,0];
-          var videoDeviceIndex = 0;
-          devices.forEach(function(device) {
-            console.log(device.kind + ": " + device.label +
-              " id = " + device.deviceId);
-            if (device.kind == "videoinput") {  
-              videoDevices[videoDeviceIndex++] =  device.deviceId;    
-            }
-          });
-
-
-          var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
-          height: { min: 776, ideal: 720, max: 1080 },
-          deviceId: { exact: videoDevices[videoDevice]  } 
-        };
-        return navigator.mediaDevices.getUserMedia({ video: constraints });
-
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then(stream => {
+        start(video, stream);
+        window.requestAnimationFrame(tick);
       })
-        .then(stream => {
-          if (isNeedScanning) {
-            start(video, stream);
-            window.requestAnimationFrame(tick);
-          }
-        })
-        .catch(e => console.error(e));
-    } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-          var videoDevices = [0,0];
-          var videoDeviceIndex = 0;
-          devices.forEach(function(device) {
-            console.log(device.kind + ": " + device.label +
-              " id = " + device.deviceId);
-            if (device.kind == "videoinput") {  
-              videoDevices[videoDeviceIndex++] =  device.deviceId;    
-            }
-          });
-
-
-          var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
-          height: { min: 776, ideal: 720, max: 1080 },
-          deviceId: { exact: videoDevices[videoDevice]  } 
-        };
-        return navigator.mediaDevices.getUserMedia({ video: constraints });
-
-      })
-        .then(stream => {
-          if (isNeedScanning) {
-            start(video, stream);
-            window.requestAnimationFrame(tick);
-          }
-        })
-        .catch(e => console.error(e));
-    } else {
-      alert("У вас ни чего не робит")
-    }
-  });
+      .catch(e => console.error(e));
+    });
 
   const tick = () => {
     const video = videoEl.current;
-    console.log("tick");
+    
     const checkVideoState = setInterval(() => {
       if (video.readyState === video.HAVE_ENOUGH_DATA) {
         clearInterval(checkVideoState);
-
-        const canvas = canvasEl.current;
-        let ctx = canvas.getContext("2d");
+        
         let video = videoEl.current;
         const height = video.videoHeight;
         const width = video.videoWidth;
-        setSize(width + ' ' + height);
 
-        ctx.drawImage(video, 0, 0, 500, 500);
+        const canvas = canvasEl.current;
+        canvas.width = width;
+        canvas.height = height;
+        let ctx = canvas.getContext("2d");
+        
+        ctx.drawImage(video, 0, 0);
         const image = ctx.getImageData(0, 0, width, height);
-        const code = jsQR(image.data, image.width, image.height);
-        if (code) {
-          setIsNeedScanning(false);
-          setCodeResult(code.data);
-          setTimerEnd(performance.now());
+        let code;
+        if (isNeedScanning) {
+          console.log("jsqr");
+          code = jsQR(image.data, image.width, image.height);
+          if (code) {
+            console.log("set result");
+            setCodeResult(code.data);
+            setTimerEnd(performance.now());
+            setIsNeedScanning(false);
+          }
         }
         window.requestAnimationFrame(tick);
       }
@@ -124,33 +74,18 @@ const App = () => {
   
   const onClick = () => {
     setIsNeedScanning(true);
+    setCodeResult('');
     setTimerStart(performance.now());
-    // worker.postMessage("sdsads");
-    // const canvas = canvasEl.current;
-    // let ctx= canvas.getContext("2d");
-    // let video = videoEl.current;
-    // const height = video.videoHeight;
-    // const width = video.videoWidth;
-    
-    // ctx.drawImage(video, 0, 0, width, height);
-    // const image = ctx.getImageData(0, 0, width, height);
-    // const code = jsQR(image.data, image.width, image.height);
-    // if (code) {
-    //   console.log("Found QR code", code);
-    // } else {
-      console.log("not found");
-    // }
   }
 
   return (
     <div className="App">
       <button onClick={()=> onClick()}>sdsdsd</button>
-      <video ref={videoEl} id="preview"/>
-      <canvas id="canvas" ref={canvasEl} />
+      <video ref={videoEl} id="preview" style={{display: "none"}}/>
+      <canvas id="canvas" ref={canvasEl} width="200"/>
       <span>{codeResult?`${codeResult} time: ${timerEnd - timerStart}`:"not fonund"}</span>
       <button onClick={()=> setVideoDevice(1)}>camera1</button>
       <button onClick={()=> setVideoDevice(0)}>camera0</button>
-      <span>{size}</span>
     </div>
   );
 };
