@@ -106,7 +106,7 @@ const App = () => {
       <button onClick={()=> onClick()}>sdsdsd</button>
       <video ref={videoEl} id="preview"/>
       <canvas id="canvas" ref={canvasEl} width="640" height="480"/>
-      <span>{codeResult?"not found":codeResult}</span>
+      <span>{codeResult?codeResult:"not fonund"}</span>
     </div>
   );
 };
