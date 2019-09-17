@@ -89,7 +89,7 @@ const App = () => {
         }
         window.requestAnimationFrame(tick);
       }
-    }, 1);
+    }, 1000);
   }
   
   const onClick = () => {
