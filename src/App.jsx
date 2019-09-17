@@ -32,18 +32,31 @@ const App = () => {
 
     if (navigator && navigator.getUserMedia) {
       alert('тута нема выбора записи кинопленки');
-      navigator.getUserMedia(
-        { video: true, audio: false },
-        function(stream) {
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          var videoDevices = [0,0];
+          var videoDeviceIndex = 0;
+          devices.forEach(function(device) {
+            console.log(device.kind + ": " + device.label +
+              " id = " + device.deviceId);
+            if (device.kind == "videoinput") {  
+              videoDevices[videoDeviceIndex++] =  device.deviceId;    
+            }
+          });
+
+
+          var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 776, ideal: 720, max: 1080 },
+          deviceId: { exact: videoDevices[videoDevice]  } 
+        };
+        return navigator.mediaDevices.getUserMedia({ video: constraints });
+
+      })
+        .then(stream => {
           start(video, stream);
           window.requestAnimationFrame(tick);
-        },
-        function() {
-          console.log(
-            "хьюстон, у нас проблемы"
-          );
-        }
-      );
+        })
+        .catch(e => console.error(e));
     } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       alert('тута есть выбора записи кинопленки');
       navigator.mediaDevices.enumerateDevices()
@@ -61,7 +74,7 @@ const App = () => {
 
           var constraints =  {width: { min: 1024, ideal: 1280, max: 1920 },
           height: { min: 776, ideal: 720, max: 1080 },
-          deviceId: { exact: videoDevices[1]  } 
+          deviceId: { exact: videoDevices[videoDevice]  } 
         };
         return navigator.mediaDevices.getUserMedia({ video: constraints });
 
