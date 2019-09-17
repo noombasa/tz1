@@ -109,7 +109,7 @@ const App = () => {
         const width = video.videoWidth;
         setSize(width + ' ' + height);
 
-        ctx.drawImage(video, 0, 0, width, height);
+        ctx.drawImage(video, 0, 0, 500, 500);
         const image = ctx.getImageData(0, 0, width, height);
         const code = jsQR(image.data, image.width, image.height);
         if (code) {
@@ -150,7 +150,7 @@ const App = () => {
       <span>{codeResult?`${codeResult} time: ${timerEnd - timerStart}`:"not fonund"}</span>
       <button onClick={()=> setVideoDevice(1)}>camera1</button>
       <button onClick={()=> setVideoDevice(0)}>camera0</button>
-
+      <span>{size}</span>
     </div>
   );
 };
