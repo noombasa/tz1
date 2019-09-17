@@ -34,6 +34,10 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "instascan": "^1.0.0",
+    "jsqr": "^1.2.0",
+    "qr-scanner": "^1.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",

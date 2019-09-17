@@ -40,7 +40,10 @@ module.exports = (env, { mode = "development" }) => {
                     test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
                     use: [{ loader: "file-loader" }]
                 }
-            ]
+            ],
+        },
+        node: {
+            fs: 'empty',
         },
         optimization: {
             mangleWasmImports: true,
