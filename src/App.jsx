@@ -20,13 +20,14 @@ const start = (videoEl, stream) => {
 }
 
 const App = () => {
-  alert("v0.1");
+  alert("v0.2");
 //   const worker = new WebWorker(Worker);
   const [codeResult, setCodeResult] = useState(null);
   const [videoDevice, setVideoDevice] = useState(1);
   const [isNeedScanning, setIsNeedScanning] = useState(false);
   const [timerEnd, setTimerEnd] = useState(0);
   const [timerStart, setTimerStart] = useState(0);
+  const [size, setSize] = useState ('');
   const videoEl = useRef(null);
   const canvasEl = useRef(null);
 
@@ -34,7 +35,6 @@ const App = () => {
     const video = videoEl.current;
 
     if (navigator && navigator.getUserMedia) {
-      alert('тута нема выбора записи кинопленки');
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           var videoDevices = [0,0];
@@ -63,7 +63,6 @@ const App = () => {
         })
         .catch(e => console.error(e));
     } else if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      alert('тута есть выбора записи кинопленки');
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           var videoDevices = [0,0];
@@ -108,6 +107,7 @@ const App = () => {
         let video = videoEl.current;
         const height = video.videoHeight;
         const width = video.videoWidth;
+        setSize(width + ' ' + height);
 
         ctx.drawImage(video, 0, 0, width, height);
         const image = ctx.getImageData(0, 0, width, height);
@@ -146,7 +146,7 @@ const App = () => {
     <div className="App">
       <button onClick={()=> onClick()}>sdsdsd</button>
       <video ref={videoEl} id="preview"/>
-      <canvas id="canvas" ref={canvasEl}/>
+      <canvas id="canvas" ref={canvasEl} />
       <span>{codeResult?`${codeResult} time: ${timerEnd - timerStart}`:"not fonund"}</span>
       <button onClick={()=> setVideoDevice(1)}>camera1</button>
       <button onClick={()=> setVideoDevice(0)}>camera0</button>
