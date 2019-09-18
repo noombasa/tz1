@@ -7,7 +7,9 @@ import styles from './Scan.scss';
 const Scan = ({device, onScanComplite}) => {
     const videoEl = useRef(null);
     const canvasEl = useRef(null);
-    console.log
+    let height;
+    let width;
+
     useEffect(()=> {
         const video = videoEl.current;
         navigator.mediaDevices.getUserMedia({
@@ -22,8 +24,8 @@ const Scan = ({device, onScanComplite}) => {
 
         const processFrame = () => {
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                const height = video.videoHeight;
-                const width = video.videoWidth;
+                height = video.videoHeight;
+                width = video.videoWidth;
         
                 const canvas = canvasEl.current;
                 canvas.width = width;
@@ -36,23 +38,25 @@ const Scan = ({device, onScanComplite}) => {
                 if (code && code.data) {
                     onScanComplite(code.data);
                 }
-
             }
             window.requestAnimationFrame(processFrame);
 
         }
-    },[]);
+    },[device]);
 
     
 
     return (
         <div className={styles.root}>
             <video ref={videoEl} id="preview" style={{display: "none"}}/>
-            <canvas 
-                id="canvas" 
-                ref={canvasEl} 
-                style={{width: "500px", height: "350px"}}
-            />
+            <div style={{width: "600px", height: "600px"}}>
+                <canvas 
+                    id="canvas" 
+                    ref={canvasEl} 
+                    style={height>width?{height: "100%"}:{width: "100%"}}
+                />
+            </div>
+           
         </div>
     )
 }
