@@ -61,7 +61,7 @@ const App = () => {
         isNeedScanning && (
           <div className="scannerWrapper">
             <div className="qrDecoded">
-              <Scan device={devices[deviceIndex]} onScanComplite={onScanComplite}/>
+              <Scan device={devices[deviceIndex].deviceId} onScanComplite={onScanComplite}/>
             </div>
           </div>
         )

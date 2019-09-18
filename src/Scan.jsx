@@ -7,11 +7,11 @@ import styles from './Scan.scss';
 const Scan = ({device, onScanComplite}) => {
     const videoEl = useRef(null);
     const canvasEl = useRef(null);
-
+    console.log
     useEffect(()=> {
         const video = videoEl.current;
         navigator.mediaDevices.getUserMedia({
-            video: true,
+            video: {deviceId: { exact: device }},
             audio: false
         })
         .then(stream => {
@@ -22,7 +22,6 @@ const Scan = ({device, onScanComplite}) => {
 
         const processFrame = () => {
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                let video = videoEl.current;
                 const height = video.videoHeight;
                 const width = video.videoWidth;
         
@@ -42,38 +41,6 @@ const Scan = ({device, onScanComplite}) => {
             window.requestAnimationFrame(processFrame);
 
         }
-
-        // const tick = () => {
-        //     const video = videoEl.current;
-            
-        //     const checkVideoState = setInterval(() => {
-        //         if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        //         clearInterval(checkVideoState);
-                
-        //         let video = videoEl.current;
-        //         const height = video.videoHeight;
-        //         const width = video.videoWidth;
-        
-        //         const canvas = canvasEl.current;
-        //         canvas.width = width;
-        //         canvas.height = height;
-
-        //         let ctx = canvas.getContext("2d");
-        //         ctx.drawImage(video, 0, 0, width, height);
-
-        //         const image = ctx.getImageData(0, 0, width, height);
-
-        //         const code = jsQR(image.data, image.width, image.height);
-        //         if (code && code.data) {
-        //             onScanComplite(code.data);
-        //         }
-        //         window.requestAnimationFrame(tick);
-        //         }
-        //     }, 64);
-        // }
-        // return function cleanup(){
-        //     clearInterval(checkVideoState);
-        // }
     },[]);
 
     
