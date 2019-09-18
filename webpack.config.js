@@ -39,6 +39,10 @@ module.exports = (env, { mode = "development" }) => {
                 {
                     test: /\.woff2?$|\.ttf$|\.eot$|\.svg$|\.png|\.jpe?g|\.gif$/,
                     use: [{ loader: "file-loader" }]
+                },
+                {
+                    test: /\.worker\.js$/,
+                    use: { loader: 'worker-loader' }
                 }
             ],
         },
