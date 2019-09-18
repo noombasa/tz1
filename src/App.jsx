@@ -55,7 +55,7 @@ const App = () => {
         window.requestAnimationFrame(tick);
       })
       .catch(e => console.error(e));
-  });
+  },[]);
 
   const tick = () => {
     const video = videoEl.current;
@@ -77,24 +77,20 @@ const App = () => {
         const image = ctx.getImageData(0, 0, width, height);
         let code;
         console.log("isNeedScanning: ", isNeedScanning, "code: ", code);
-        if (isNeedScanning) {
-          console.log("jsqr", isNeedScanning);
           code = jsQR(image.data, image.width, image.height);
-          if (code) {
+          if (code && code.data) {
             console.log("set result");
             setCodeResult(code.data);
             setTimerEnd(performance.now());
             setIsNeedScanning(false);
           }
-        }
         window.requestAnimationFrame(tick);
       }
-    }, 1000);
+    }, 64);
   }
   
   const onClick = () => {
     setIsNeedScanning(true);
-    setCodeResult('');
     setTimerStart(performance.now());
   }
 
