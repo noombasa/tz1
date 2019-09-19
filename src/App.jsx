@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Scan from './Scan.jsx';
 import styles from "./App.scss";
 // import Worker from './worker.js';
+import Worker from "./worker2.js";
+import WebWorker from './WebWorker.js';
 
 
 const App = () => {
@@ -12,14 +14,14 @@ const App = () => {
   const [timerStart, setTimerStart] = useState(0);
   const [codeResult, setCodeResult] = useState('');
   // const worker = new Worker();
+  const worker = new WebWorker(Worker);
+
   
   useEffect(() => {
-    // worker.postMessage("asdsads");
-
-    // worker.onmessage = (e) => {
-    //   console.log('Message received from worker', e);
-    // }
-    console.log(123);
+    worker.onmessage = (e) => {
+      console.log("onmessage", e);
+    }
+    console.log(333);
 
     navigator.mediaDevices.enumerateDevices()
       .then(devicesList => {
@@ -43,7 +45,6 @@ const App = () => {
 
   }
 
-
   return (
     <div className={styles.root}>
       <div className="panel">
@@ -63,7 +64,7 @@ const App = () => {
         isNeedScanning && (
           <div className="scannerWrapper">
             <div className="qrDecoded">
-              <Scan device={devices[deviceIndex].deviceId} onScanComplite={onScanComplite}/>
+              <Scan worker={worker} device={devices[deviceIndex].deviceId} onScanComplite={onScanComplite}/>
             </div>
           </div>
         )

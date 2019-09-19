@@ -4,14 +4,14 @@ import jsQR from "jsqr";
 import {startVideo} from './helper.js'
 import styles from './Scan.scss';
 
-const Scan = ({device, onScanComplite}) => {
+const Scan = ({device, onScanComplite, worker}) => {
     const videoEl = useRef(null);
     const canvasEl = useRef(null);
     let height;
     let width;
 
     useEffect(()=> {
-        console.log(device);
+        console.log("device scan", device);
         const video = videoEl.current;
         navigator.mediaDevices.getUserMedia({
             video: {deviceId: { exact: device }},
@@ -34,8 +34,9 @@ const Scan = ({device, onScanComplite}) => {
 
                 let ctx = canvas.getContext("2d");
                 ctx.drawImage(video, 0, 0, width, height);
-                const image = ctx.getImageData(0, 0, width, height);
-                const code = jsQR(image.data, image.width, image.height);
+                // const image = ctx.getImageData(0, 0, width, height);
+                // const code = jsQR(image.data, image.width, image.height);
+                worker.postMessage("asdsads");
                 if (code && code.data) {
                     onScanComplite(code.data);
                 }
