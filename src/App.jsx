@@ -21,7 +21,7 @@ const App = () => {
     worker.onmessage = (e) => {
       console.log("onmessage", e);
     }
-    console.log(333);
+    console.log(111);
 
     navigator.mediaDevices.enumerateDevices()
       .then(devicesList => {
