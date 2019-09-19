@@ -37,9 +37,9 @@ const Scan = ({device, onScanComplite, worker}) => {
                 // const image = ctx.getImageData(0, 0, width, height);
                 // const code = jsQR(image.data, image.width, image.height);
                 worker.postMessage("asdsads");
-                if (code && code.data) {
-                    onScanComplite(code.data);
-                }
+                // if (code && code.data) {
+                //     onScanComplite(code.data);
+                // }
             }
             window.requestAnimationFrame(processFrame);
 
