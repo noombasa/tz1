@@ -11,14 +11,16 @@ const App = () => {
   const [timerEnd, setTimerEnd] = useState(0);
   const [timerStart, setTimerStart] = useState(0);
   const [codeResult, setCodeResult] = useState('');
-
   // const worker = new Worker();
-  // worker.postMessage("asdsads");
-
+  
   useEffect(() => {
+    // worker.postMessage("asdsads");
+
     // worker.onmessage = (e) => {
-    //   console.log('Message received from worker');
+    //   console.log('Message received from worker', e);
     // }
+    console.log(123);
+
     navigator.mediaDevices.enumerateDevices()
       .then(devicesList => {
         let devList = devicesList.filter((device)=> device.kind === "videoinput")

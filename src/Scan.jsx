@@ -11,6 +11,7 @@ const Scan = ({device, onScanComplite}) => {
     let width;
 
     useEffect(()=> {
+        console.log(device);
         const video = videoEl.current;
         navigator.mediaDevices.getUserMedia({
             video: {deviceId: { exact: device }},
@@ -42,7 +43,7 @@ const Scan = ({device, onScanComplite}) => {
             window.requestAnimationFrame(processFrame);
 
         }
-    },[device]);
+    });
 
     
 
